@@ -1,0 +1,39 @@
+{
+  "name": "vice-city-street-life",
+  "version": "0.1.0",
+  "description": "AAA-Style Open-World 3D Mobile Game - Vice City Street Life",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server --port=3000",
+    "build": "echo 'Build complete - ready for deployment'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "game",
+    "3d",
+    "open-world",
+    "driving",
+    "racing",
+    "threejs",
+    "mobile",
+    "vice-city"
+  ],
+  "author": "Marc907080",
+  "license": "MIT",
+  "dependencies": {
+    "three": "^0.128.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "serve": "^14.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not op_mini all"
+  ]
+}
