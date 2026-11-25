@@ -178,11 +178,15 @@ export class UIManager {
     
     // Loading screen
     updateLoadingProgress(progress, text) {
-        if (this.elements.loadingBar) {
-            this.elements.loadingBar.style.width = `${Math.min(100, progress * 100)}%`;
-        }
-        if (this.elements.loadingText) {
-            this.elements.loadingText.textContent = text || 'Loading...';
+        try {
+            if (this.elements.loadingBar) {
+                this.elements.loadingBar.style.width = `${Math.min(100, Math.max(0, progress))}%`;
+            }
+            if (this.elements.loadingText) {
+                this.elements.loadingText.textContent = text || 'Loading...';
+            }
+        } catch (error) {
+            console.warn('UIManager: Failed to update loading progress:', error);
         }
     }
     

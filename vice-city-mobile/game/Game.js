@@ -91,12 +91,15 @@ export class Game {
         console.log('Game: Loading assets...');
         
         // Load world assets
+        this.updateLoadingProgress(30, 'Loading world assets...');
         await this.world.loadAssets();
         
         // Create initial world
+        this.updateLoadingProgress(40, 'Building city...');
         await this.world.create();
         
         // Create vehicle
+        this.updateLoadingProgress(70, 'Loading vehicle...');
         this.vehicle = new Vehicle(this.renderer.scene, this.settings);
         await this.vehicle.init();
         
@@ -107,6 +110,7 @@ export class Game {
         this.cameraManager.setTarget(this.vehicle.mesh);
         this.cameraManager.setMode('chase');
         
+        this.updateLoadingProgress(100, 'Ready to play!');
         this.state.assetsLoaded = true;
         console.log('Game: Assets loaded');
     }
@@ -122,6 +126,8 @@ export class Game {
         
         // Start game loop
         this.gameLoop();
+        
+        console.log('Game: Started successfully');
     }
     
     gameLoop() {
@@ -183,12 +189,38 @@ export class Game {
     
     // State management
     showLoadingScreen() {
-        document.getElementById('loading-screen').classList.remove('hidden');
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+            loadingScreen.classList.remove('hidden');
+        }
         this.state.current = 'loading';
     }
     
     hideLoadingScreen() {
-        document.getElementById('loading-screen').classList.add('hidden');
+        const loadingScreen = document.getElementById('loading-screen');
+        if (loadingScreen) {
+            loadingScreen.classList.add('hidden');
+        }
+    }
+    
+    updateLoadingProgress(progress, text) {
+        try {
+            if (this.ui && typeof this.ui.updateLoadingProgress === 'function') {
+                this.ui.updateLoadingProgress(progress, text);
+            } else {
+                // Fallback: update loading bar directly
+                const loadingBar = document.getElementById('loading-bar');
+                const loadingText = document.getElementById('loading-text');
+                if (loadingBar) {
+                    loadingBar.style.width = `${Math.min(100, progress * 100)}%`;
+                }
+                if (loadingText) {
+                    loadingText.textContent = text || 'Loading...';
+                }
+            }
+        } catch (error) {
+            console.warn('Failed to update loading progress:', error);
+        }
     }
     
     showMainMenu() {

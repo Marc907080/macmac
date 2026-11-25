@@ -53,6 +53,7 @@ export class World {
         this.createProceduralTextures();
         
         console.log('World: Assets loaded');
+        return Promise.resolve();
     }
     
     createProceduralTextures() {
@@ -161,6 +162,7 @@ export class World {
         this.createCollisionBoundaries();
         
         console.log('World: City created');
+        return Promise.resolve();
     }
     
     createGround() {
